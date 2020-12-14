@@ -3,31 +3,38 @@
 
 import * as React from 'react'
 
-const CountContext = React.createContext({});
+const useCount = () => {
+  const CountContext = React.createContext({});
+  const [count, setCount] = React.useState();
 
-const CountProvider = (props) => {
-  const [count, setCount] = React.useState(0);
-  const value = [count, setCount];
+  const CountProvider = (props) => {
+    const value = [count, setCount];
 
-  return (
-    <CountContext.Provider value={value} {...props} />
-  )
+    return (
+      <CountContext.Provider value={value} {...props} />
+    )
+  }
+
+  return {
+    count, setCount, CountProvider
+  }
 }
 
 function CountDisplay() {
   // 🐨 get the count from useContext with the CountContext
-  const [count] = React.useContext(CountContext);
+  const { count } = useCount();
   return <div>{`The current count is ${count}`}</div>
 }
 
 function Counter() {
   // 🐨 get the setCount from useContext with the CountContext
-  const [, setCount] = React.useContext(CountContext);
+  const { setCount } = useCount();
   const increment = () => setCount(c => c + 1)
   return <button onClick={increment}>Increment count</button>
 }
 
 function App() {
+  const { CountProvider } = useCount();
   return (
     <div>
       <CountProvider>

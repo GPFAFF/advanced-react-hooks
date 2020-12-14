@@ -56,15 +56,10 @@ function useAsync(callback, initialState, dependencies) {
 
     dispatch({ type: 'pending' })
     promise.then(
-      data => {
-        dispatch({ type: 'resolved', data })
-      },
-      error => {
-        dispatch({ type: 'rejected', error })
-      },
+      data => dispatch({ type: 'resolved', data }),
+      error => dispatch({ type: 'rejected', error }),
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, dependencies)
+  }, [callback])
 
   return {
     data,
@@ -74,14 +69,17 @@ function useAsync(callback, initialState, dependencies) {
 }
 
 function PokemonInfo({ pokemonName }) {
-  // 🐨 this will change from "pokemon" to "data"
-  const { data, status, error } = useAsync(
+  const asyncCallback = React.useCallback(
     () => {
       if (!pokemonName) return;
       return fetchPokemon(pokemonName)
     },
+    [pokemonName],
+  )
+
+  const { data, status, error } = useAsync(
+    asyncCallback,
     { status: pokemonName ? 'pending' : 'idle' },
-    [pokemonName]
   )
 
   if (status === 'idle' || !pokemonName) {

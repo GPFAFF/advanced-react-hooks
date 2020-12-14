@@ -1,11 +1,11 @@
 import * as React from 'react'
-import {render} from '@testing-library/react'
+import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App from '../final/04'
-// import App from '../exercise/04'
+//  import App from '../final/04'
+import App from '../exercise/04'
 
 test('adds and removes children from the log', () => {
-  const {getByText, getByRole} = render(<App />)
+  const { getByText, getByRole } = render(<App />)
   const log = getByRole('log')
   const chatCount = log.children.length
   const add = getByText(/add/i)
@@ -17,7 +17,7 @@ test('adds and removes children from the log', () => {
 })
 
 test('scrolls to the bottom', () => {
-  const {getByText, getByRole} = render(<App />)
+  const { getByText, getByRole } = render(<App />)
   const log = getByRole('log')
   const add = getByText(/add/i)
   const remove = getByText(/remove/i)

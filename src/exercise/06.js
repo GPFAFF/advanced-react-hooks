@@ -8,6 +8,8 @@ function useMedia(query, initialState = false) {
   // 🐨 call React.useDebugValue here.
   // 💰 here's the formatted label I use: `\`${query}\` => ${state}`
 
+  React.useDebugValue(`\`${query}\` => ${state}`);
+
   React.useEffect(() => {
     let mounted = true
     const mql = window.matchMedia(query)
@@ -36,7 +38,7 @@ function Box() {
   const isSmall = useMedia('(max-width: 699px)')
   const color = isBig ? 'green' : isMedium ? 'yellow' : isSmall ? 'red' : null
 
-  return <div style={{width: 200, height: 200, backgroundColor: color}} />
+  return <div style={{ width: 200, height: 200, backgroundColor: color }} />
 }
 
 function App() {
